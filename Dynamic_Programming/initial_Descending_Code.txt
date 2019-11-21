@@ -1,0 +1,42 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+	int N;
+	cin >> N;
+	int** arr = new int* [N];
+	int** max_N = new int*[N];
+	int** min_N = new int*[N];
+	for (int i = 0; i < N; ++i) {
+		arr[i] = new int[3];
+		cin >> arr[i][0] >> arr[i][1] >> arr[i][2];
+		max_N[i] = new int[3];
+		min_N[i] = new int[3];
+	}
+	max_N[0] = arr[0];
+	min_N[0] = arr[0];
+	for (int i = 0; i <= N-2; i++) {
+		for (int j = 0; j < 3; j++) {
+			switch (j)
+			{
+			case 0:
+				max_N[i+1][j] = arr[i + 1][j] + max(max_N[i][0], max_N[i][1]);
+				min_N[i+1][j] = arr[i + 1][j] + min(min_N[i][0], min_N[i][1]);
+				break;
+			case 1:
+				max_N[i+1][j] = arr[i + 1][j] + max(max(max_N[i][0], max_N[i][1]), max_N[i][2]);
+				min_N[i+1][j] = arr[i + 1][j] + min(min(min_N[i][0], min_N[i][1]), min_N[i][2]);
+				break;
+			case 2:
+				max_N[i+1][j] = arr[i + 1][j] + max(max_N[i][1], max_N[i][2]);
+				min_N[i+1][j] = arr[i + 1][j] + min(min_N[i][1], min_N[i][2]);
+				break;
+			}
+		}
+	}
+	cout << max(max(max_N[N-1][0], max_N[N-1][1]), max_N[N-1][2]) << " " << min(min(min_N[N - 1][0], min_N[N - 1][1]), min_N[N - 1][2]) << endl;
+	delete arr;
+	delete max_N;
+	delete min_N;
+}

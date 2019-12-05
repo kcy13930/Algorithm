@@ -1,8 +1,8 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 using namespace std;
 
-int caculator(char* ch, int cnt) {
+string caculator(char* ch, int cnt) {
 	while (cnt<strlen(ch)) {
 		char c = ch[cnt];
 		cnt++;
@@ -16,9 +16,12 @@ int caculator(char* ch, int cnt) {
 				cnt++;
 			}
 			cnt++;
+			if (ch[cnt] == '}') {
+				return "ERROR";
+			}
 			int k = cnt;
 			for (int j = 0; j < i; j++) {
-				k = caculator(ch, cnt);
+				k = atoi(caculator(ch, cnt).c_str());
 			}
 			cnt = k;
 		}
@@ -26,7 +29,8 @@ int caculator(char* ch, int cnt) {
 			break;
 		}
 	}
-	return cnt;
+
+	return to_string(cnt);
 }
 int main() {
 	char* ch = new char;
